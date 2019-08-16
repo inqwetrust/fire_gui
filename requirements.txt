@@ -4,3 +4,4 @@ pyautogui
 pywin32
 win32gui
 pyinstaller
+cryptography
