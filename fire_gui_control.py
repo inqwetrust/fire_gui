@@ -113,7 +113,7 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif get_scrolllock_state():
+        elif not get_scrolllock_state():
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=10)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
