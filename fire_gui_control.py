@@ -1,6 +1,8 @@
+import time
+
 from firebase import firebase
 import os.path
-import datetime
+import sys
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -20,13 +22,26 @@ result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
 print(result)
 
 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
-result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
-print(result)
 
-result = firebase.get('/ip/', name=None)
-for k, v in result.items():
-    print(k)
-    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+def monitor():
+    result = None
+    while True:
+        result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
+        if result != result_current:
+            print(result_current)
+            result = result_current
+            time.sleep(1)
+
+
+def broadcast():
+    result = firebase.get('/ip/', name=None)
+    for k, v in result.items():
+        print(k)
+        firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+
 
 if __name__ == '__main__':
-    pass
+    if len(sys.argv) == 1:
+        monitor()
+    elif sys.argv[1] == "control":
+        broadcast()
