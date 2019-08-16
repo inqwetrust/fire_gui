@@ -58,7 +58,7 @@ def broadcast():
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
-        if a != state_left and get_scrolllock_state() and not get_numlock_state():  # Button state changed
+        if a != state_left and get_scrolllock_state() and get_numlock_state() == False:  # Button state changed
             state_left = a
             print(a)
             if a < 0:
@@ -68,19 +68,22 @@ def broadcast():
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                result_len = ' '
                 while True:
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
                         if len(v['click']) == 0:
                             print(k, v)
+                            result_len = ''
                             time.sleep(1)
-
                             break
+                    if len(result_len) == 0:
+                        break
                 time.sleep(10)
             else:
                 print('Left Button Released')
 
-        elif b != state_right and get_scrolllock_state() and not get_numlock_state():  # Button state changed
+        elif b != state_right and get_scrolllock_state() and get_numlock_state() == False:  # Button state changed
             state_right = b
             print(b)
             if b < 0:
