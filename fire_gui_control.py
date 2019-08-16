@@ -62,6 +62,7 @@ def broadcast():
                 for k, v in result.items():
                     print(k)
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                time.sleep(1)
             else:
                 print('Left Button Released')
 
@@ -76,6 +77,7 @@ def broadcast():
                 for k, v in result.items():
                     print(k)
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                time.sleep(1)
             else:
                 print('Right Button Released')
         elif get_capslock_state():
