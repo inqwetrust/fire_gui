@@ -31,16 +31,16 @@ firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 
 def monitor():
-    result = ''
+    result = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
     while True:
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
             print(result_current)
             if len(result_current) > 0:
-                if result_current['state'] == "Left":
+                if result_current['state'] == "Left" and result['state'] == "Move":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                elif result_current['state'] == "Right":
+                elif result_current['state'] == "Right" and result['state'] == "Move":
                     pyautogui.rightClick((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Move":
