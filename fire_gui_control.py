@@ -13,13 +13,20 @@ if os.path.isfile(filename):
 else:
     open(filename, 'a').close()
 firebase = firebase.FirebaseApplication(f.read(), None)
-# firebase.delete(url='/ip/{}'.format(ip), name='2')
+
 data = {'x': 200, 'y': 300}
 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data=data)
-firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
+result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
+print(result)
 
-result = firebase.get('/',name=None)
-print(result['ip'].keys())
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
+result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
+print(result)
+
+result = firebase.get('/ip/', name=None)
+for k, v in result.items():
+    print(k)
+    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
 
 if __name__ == '__main__':
     pass
