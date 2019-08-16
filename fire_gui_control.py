@@ -23,10 +23,9 @@ else:
 firebase = firebase.FirebaseApplication(f.read(), None)
 
 # firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data=data)
-result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
-print(result)
+# result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
 
-firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
+# firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 def monitor():
     result = ''
@@ -41,6 +40,7 @@ def monitor():
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
             result = result_current
+            print(result)
         time.sleep(0.2)
 
 
