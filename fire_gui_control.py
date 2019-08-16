@@ -33,7 +33,12 @@ def monitor():
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
             if len(result_current) > 0:
-                pyautogui.click((int(result_current['x']), int(result_current['y'])))
+                if result_current['state'] == "Left":
+                    pyautogui.click((int(result_current['x']), int(result_current['y'])))
+                elif result_current['state'] == "Right":
+                    pyautogui.rightClick((int(result_current['x']), int(result_current['y'])))
+                elif result_current['state'] == "Move":
+                    pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
             result = result_current
             time.sleep(1)
 
@@ -51,7 +56,7 @@ def broadcast():
             if a < 0:
                 print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y}
+                data = {'x': x, 'y': y, 'state': 'Left'}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     print(k)
@@ -59,13 +64,27 @@ def broadcast():
             else:
                 print('Left Button Released')
 
-        if b != state_right:  # Button state changed
+        elif b != state_right:  # Button state changed
             state_right = b
             print(b)
             if b < 0:
                 print('Right Button Pressed')
+                flags, hcursor, (x, y) = win32gui.GetCursorInfo()
+                data = {'x': x, 'y': y, 'state': 'Right'}
+                result = firebase.get('/ip/', name=None)
+                for k, v in result.items():
+                    print(k)
+                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
             else:
                 print('Right Button Released')
+        else:
+            flags, hcursor, (x, y) = win32gui.GetCursorInfo()
+            data = {'x': x, 'y': y, 'state': 'Move'}
+            result = firebase.get('/ip/', name=None)
+            for k, v in result.items():
+                print(k)
+                firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+            time.sleep(0.5)
         time.sleep(0.001)
 
         # time.sleep(1)
