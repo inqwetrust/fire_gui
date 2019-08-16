@@ -28,6 +28,7 @@ firebase = firebase.FirebaseApplication(f.read(), None)
 
 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
+
 def monitor():
     result = ''
     while True:
@@ -42,11 +43,12 @@ def monitor():
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
             result = result_current
             print(result)
-        time.sleep(0.2)
+        time.sleep(0.02)
 
 
 def broadcast():
     move_time = datetime.datetime.now()
+    position_last = (0, 0)
     state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128
     state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button up = -127 or -128
     while True:
@@ -83,14 +85,16 @@ def broadcast():
             else:
                 print('Right Button Released')
         elif get_capslock_state():
-            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=10)):
+            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=2)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y, 'state': 'Move'}
-                result = firebase.get('/ip/', name=None)
-                for k, v in result.items():
-                    print(k)
-                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
-                move_time = datetime.datetime.now()
+                if (x, y) != position_last:
+                    data = {'x': x, 'y': y, 'state': 'Move'}
+                    result = firebase.get('/ip/', name=None)
+                    for k, v in result.items():
+                        print(k)
+                        firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                    move_time = datetime.datetime.now()
+                    position_last = (x, y)
         time.sleep(0.001)
 
         # time.sleep(1)
