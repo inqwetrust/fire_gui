@@ -88,7 +88,6 @@ def broadcast():
                 data = {'x': x, 'y': y, 'state': 'Right'}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
-                    print(k)
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
                 time.sleep(10)
             else:
@@ -100,7 +99,6 @@ def broadcast():
                     data = {'x': x, 'y': y, 'state': 'Move'}
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
-                        print(k)
                         firebase.put(url='/ip/{}'.format(k), name='click', data=data)
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
