@@ -34,7 +34,8 @@ def monitor():
     while True:
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
-            if len(result_current) > 0:
+            print(result_current)
+            if len(result_current['click']) > 0:
                 if result_current['state'] == "Left":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
