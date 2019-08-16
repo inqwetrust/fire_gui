@@ -36,7 +36,7 @@ def monitor():
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
             print(result_current)
-            if len(result_current['click']) > 0:
+            if len(result_current) > 0:
                 if result_current['state'] == "Left":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
@@ -46,9 +46,9 @@ def monitor():
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                result = result_current
-                print(result)
-        time.sleep(0.02)
+            result = result_current
+            print(result)
+        time.sleep(0.2)
 
 
 def broadcast():
