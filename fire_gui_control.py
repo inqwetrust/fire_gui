@@ -26,7 +26,7 @@ firebase = firebase.FirebaseApplication(f.read(), None)
 # firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data=data)
 # result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
 
-# firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 def monitor():
     result = ''
