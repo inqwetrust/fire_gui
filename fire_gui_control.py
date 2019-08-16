@@ -71,9 +71,10 @@ def broadcast():
                 while True:
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
-                        print(k, v)
-                        if len(v) == 0:
+                        if len(v['click']) == 0:
+                            print(k, v)
                             time.sleep(1)
+
                             break
                 time.sleep(10)
             else:
