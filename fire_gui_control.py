@@ -25,12 +25,12 @@ print(result)
 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 def monitor():
-    result = None
+    result = ''
     while True:
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
-            print(result_current)
-            pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
+            if len(result_current) > 0:
+                pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
             result = result_current
             time.sleep(1)
 
