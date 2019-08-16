@@ -100,6 +100,14 @@ def get_capslock_state():
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
-        monitor()
+        while True:
+            try:
+                monitor()
+            except:
+                pass
     elif sys.argv[1] == "control":
-        broadcast()
+        while True:
+            try:
+                broadcast()
+            except:
+                pass
