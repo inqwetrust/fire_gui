@@ -37,10 +37,13 @@ def monitor():
             if len(result_current) > 0:
                 if result_current['state'] == "Left":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Right":
                     pyautogui.rightClick((int(result_current['x']), int(result_current['y'])))
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
             result = result_current
             print(result)
         time.sleep(0.02)
@@ -55,7 +58,7 @@ def broadcast():
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
-        if a != state_left and get_scrolllock_state():  # Button state changed
+        if a != state_left and get_scrolllock_state() and not get_numlock_state():  # Button state changed
             state_left = a
             print(a)
             if a < 0:
@@ -64,13 +67,19 @@ def broadcast():
                 data = {'x': x, 'y': y, 'state': 'Left'}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
-                    print(k)
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                while True:
+                    result = firebase.get('/ip/', name=None)
+                    for k, v in result.items():
+                        print(k, v)
+                        if len(v) == 0:
+                            time.sleep(1)
+                            break
                 time.sleep(10)
             else:
                 print('Left Button Released')
 
-        elif b != state_right and get_scrolllock_state():  # Button state changed
+        elif b != state_right and get_scrolllock_state() and not get_numlock_state():  # Button state changed
             state_right = b
             print(b)
             if b < 0:
