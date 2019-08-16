@@ -55,7 +55,7 @@ def broadcast():
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
-        if a != state_left and get_capslock_state():  # Button state changed
+        if a != state_left and get_scrolllock_state():  # Button state changed
             state_left = a
             print(a)
             if a < 0:
@@ -70,7 +70,7 @@ def broadcast():
             else:
                 print('Left Button Released')
 
-        elif b != state_right and get_capslock_state():  # Button state changed
+        elif b != state_right and get_scrolllock_state():  # Button state changed
             state_right = b
             print(b)
             if b < 0:
@@ -84,7 +84,7 @@ def broadcast():
                 time.sleep(10)
             else:
                 print('Right Button Released')
-        elif get_capslock_state():
+        elif get_scrolllock_state() and get_numlock_state():
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=2)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
@@ -99,8 +99,15 @@ def broadcast():
 
         # time.sleep(1)
 
-def get_capslock_state():
-    hllDll = ctypes.WinDLL ("User32.dll")
+
+def get_numlock_state():
+    hllDll = ctypes.WinDLL("User32.dll")
+    VK_CAPITAL = 0x90
+    return hllDll.GetKeyState(VK_CAPITAL)
+
+
+def get_scrolllock_state():
+    hllDll = ctypes.WinDLL("User32.dll")
     VK_CAPITAL = 0x91
     return hllDll.GetKeyState(VK_CAPITAL)
 
