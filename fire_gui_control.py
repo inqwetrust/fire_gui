@@ -61,6 +61,7 @@ def broadcast():
         b = win32api.GetKeyState(0x02)
 
         if a != state_left and get_scrolllock_state():  # Button state changed
+            move_time = datetime.datetime.now()
             state_left = a
             # print(a)
             if a < 0:
@@ -87,6 +88,7 @@ def broadcast():
                 pass
 
         elif b != state_right and get_scrolllock_state():  # Button state changed
+            move_time = datetime.datetime.now()
             state_right = b
             # print(b)
             if b < 0:
