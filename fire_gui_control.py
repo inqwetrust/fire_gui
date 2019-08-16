@@ -1,3 +1,4 @@
+import datetime
 import ctypes
 from firebase import firebase
 import os.path
@@ -45,6 +46,7 @@ def monitor():
 
 
 def broadcast():
+    move_time = datetime.datetime.now()
     state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128
     state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button up = -127 or -128
     while True:
@@ -81,13 +83,14 @@ def broadcast():
             else:
                 print('Right Button Released')
         elif get_capslock_state():
-            flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-            data = {'x': x, 'y': y, 'state': 'Move'}
-            result = firebase.get('/ip/', name=None)
-            for k, v in result.items():
-                print(k)
-                firebase.put(url='/ip/{}'.format(k), name='click', data=data)
-            time.sleep(0.5)
+            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=10)):
+                flags, hcursor, (x, y) = win32gui.GetCursorInfo()
+                data = {'x': x, 'y': y, 'state': 'Move'}
+                result = firebase.get('/ip/', name=None)
+                for k, v in result.items():
+                    print(k)
+                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                move_time = datetime.datetime.now()
         time.sleep(0.001)
 
         # time.sleep(1)
