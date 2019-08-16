@@ -1,3 +1,4 @@
+import ctypes
 from firebase import firebase
 import os.path
 import sys
@@ -77,7 +78,7 @@ def broadcast():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
             else:
                 print('Right Button Released')
-        else:
+        elif get_capslock_state():
             flags, hcursor, (x, y) = win32gui.GetCursorInfo()
             data = {'x': x, 'y': y, 'state': 'Move'}
             result = firebase.get('/ip/', name=None)
@@ -88,6 +89,11 @@ def broadcast():
         time.sleep(0.001)
 
         # time.sleep(1)
+
+def get_capslock_state():
+    hllDll = ctypes.WinDLL ("User32.dll")
+    VK_CAPITAL = 0x91
+    return hllDll.GetKeyState(VK_CAPITAL)
 
 
 if __name__ == '__main__':
