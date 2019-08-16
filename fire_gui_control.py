@@ -14,11 +14,12 @@ else:
     open(filename, 'a').close()
 firebase = firebase.FirebaseApplication(f.read(), None)
 # firebase.delete(url='/ip/{}'.format(ip), name='2')
-data = ip
+data = {'x': 200, 'y': 300}
 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='1', data=data)
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='1', data='')
 
 result = firebase.get('/',name=None)
-print(result)
+print(result['ip'].keys())
 
 if __name__ == '__main__':
     pass
