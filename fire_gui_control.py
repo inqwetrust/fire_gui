@@ -15,8 +15,8 @@ else:
 firebase = firebase.FirebaseApplication(f.read(), None)
 # firebase.delete(url='/ip/{}'.format(ip), name='2')
 data = {'x': 200, 'y': 300}
-firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='1', data=data)
-firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='1', data='')
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data=data)
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 result = firebase.get('/',name=None)
 print(result['ip'].keys())
