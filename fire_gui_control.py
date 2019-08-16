@@ -46,8 +46,8 @@ def monitor():
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-            result = result_current
-            print(result)
+                result = result_current
+                print(result)
         time.sleep(0.2)
 
 
