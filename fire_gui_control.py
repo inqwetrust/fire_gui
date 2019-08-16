@@ -1,3 +1,4 @@
+import traceback
 import datetime
 import ctypes
 from firebase import firebase
@@ -141,10 +142,10 @@ if __name__ == '__main__':
             try:
                 monitor()
             except:
-                pass
+                print(traceback.format_exc())
     elif sys.argv[1] == "control":
         while True:
             try:
                 broadcast()
             except:
-                pass
+                print(traceback.format_exc())
