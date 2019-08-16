@@ -41,7 +41,7 @@ def monitor():
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
             result = result_current
-            time.sleep(0.2)
+        time.sleep(0.2)
 
 
 def broadcast():
