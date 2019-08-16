@@ -7,7 +7,6 @@ s.connect(("8.8.8.8", 80))
 ip = s.getsockname()[0]
 s.close()
 
-
 filename = 'firebase_database_url.txt'
 if os.path.isfile(filename):
     f = open(filename, "r")
