@@ -14,9 +14,10 @@ else:
     open(filename, 'a').close()
 firebase = firebase.FirebaseApplication(f.read(), None)
 # firebase.delete(url='/ip/{}'.format(ip), name='2')
-data = {'ip': ip, 'age': 26, 'created_at': datetime.datetime.now()}
-firebase.post(url='/ip/{}'.format(ip).replace('.', '_'), data=data)
-result = firebase.get('/', None)
+data = ip
+firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='1', data=data)
+
+result = firebase.get('/',name=None)
 print(result)
 
 if __name__ == '__main__':
