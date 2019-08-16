@@ -3,3 +3,4 @@ python-firebase
 pyautogui
 pywin32
 win32gui
+pyinstaller
