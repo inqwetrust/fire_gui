@@ -47,7 +47,7 @@ def monitor():
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
-                print(result)
+                # print(result)
         time.sleep(0.2)
 
 
@@ -62,9 +62,9 @@ def broadcast():
 
         if a != state_left and get_scrolllock_state():  # Button state changed
             state_left = a
-            print(a)
+            # print(a)
             if a < 0:
-                print('Left Button Pressed')
+                # print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Left'}
                 result = firebase.get('/ip/', name=None)
@@ -75,7 +75,7 @@ def broadcast():
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
                         if len(v['click']) == 0:
-                            print(k, v)
+                            # print(k, v)
                             result_len = ''
                             time.sleep(1)
                             break
@@ -83,13 +83,14 @@ def broadcast():
                         break
                 time.sleep(0.1)
             else:
-                print('Left Button Released')
+                # print('Left Button Released')
+                pass
 
         elif b != state_right and get_scrolllock_state():  # Button state changed
             state_right = b
-            print(b)
+            # print(b)
             if b < 0:
-                print('Right Button Pressed')
+                # print('Right Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Right'}
                 result = firebase.get('/ip/', name=None)
@@ -108,7 +109,8 @@ def broadcast():
                         break
                 time.sleep(0.1)
             else:
-                print('Right Button Released')
+                # print('Right Button Released')
+                pass
         elif get_scrolllock_state():
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=2)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
