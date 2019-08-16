@@ -37,10 +37,10 @@ def monitor():
         if result != result_current:
             print(result_current)
             if "state" in result_current:
-                if result_current['state'] == "Left" and result['state'] != "Left":
+                if result_current['state'] == "Left":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                elif result_current['state'] == "Right" and result['state'] != "Right":
+                elif result_current['state'] == "Right":
                     pyautogui.rightClick((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Move":
