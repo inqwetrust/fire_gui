@@ -56,6 +56,8 @@ def broadcast():
     position_last = (0, 0)
     state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128
     state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button up = -127 or -128
+    scroll_last_state = None
+    num_last_state = None
     while True:
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
@@ -113,7 +115,7 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif not get_scrolllock_state():
+        elif not get_scrolllock_state() or True:
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=10)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
@@ -124,6 +126,8 @@ def broadcast():
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
         time.sleep(0.001)
+        scroll_last_state = get_scrolllock_state()
+        num_last_state = get_numlock_state()
 
         # time.sleep(1)
 
