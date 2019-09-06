@@ -62,12 +62,12 @@ def broadcast():
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
-        if scroll_last_state != get_scrolllock_state() and scroll_last_state != None:  # Button state changed
+        if scroll_last_state != get_scrolllock_state() and scroll_last_state != None and get_caplock_state():  # Button state changed
         # if a != state_left and get_scrolllock_state():  # old Button state changed
             move_time = datetime.datetime.now()
             state_left = a
             # print(a)
-            if a < 0:
+            if a < 0 or True:
                 # print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Left'}
@@ -90,12 +90,12 @@ def broadcast():
                 # print('Left Button Released')
                 pass
 
-        elif num_last_state != get_scrolllock_state() and num_last_state != None:  # Button state changed
+        elif num_last_state != get_scrolllock_state() and num_last_state != None and get_caplock_state():  # Button state changed
         # elif b != state_right and get_scrolllock_state():  # Button state changed
             move_time = datetime.datetime.now()
             state_right = b
             # print(b)
-            if b < 0:
+            if b < 0 or True:
                 # print('Right Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Right'}
@@ -117,8 +117,8 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif not get_scrolllock_state() or True:
-            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=10)):
+        elif get_caplock_state():
+            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
                     data = {'x': x, 'y': y, 'state': 'Move'}
@@ -137,6 +137,12 @@ def broadcast():
 def get_numlock_state():
     hllDll = ctypes.WinDLL("User32.dll")
     VK_CAPITAL = 0x90
+    return hllDll.GetKeyState(VK_CAPITAL)
+
+
+def get_caplock_state():
+    hllDll = ctypes.WinDLL("User32.dll")
+    VK_CAPITAL = 0x14
     return hllDll.GetKeyState(VK_CAPITAL)
 
 
