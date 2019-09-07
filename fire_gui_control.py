@@ -83,7 +83,7 @@ def broadcast():
                     for k, v in result.items():
                         if len(v['click']) == 0:
                             result_len = ''
-                            time.sleep(1)
+                            time.sleep(0.1)
                             print('ready after left click')
                             break
                     if len(result_len) == 0:
@@ -111,7 +111,7 @@ def broadcast():
                     for k, v in result.items():
                         if len(v['click']) == 0:
                             result_len = ''
-                            time.sleep(1)
+                            time.sleep(0.1)
                             print('ready after right click')
                             break
                     if len(result_len) == 0:
