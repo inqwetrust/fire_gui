@@ -155,6 +155,12 @@ def broadcast():
                         ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
+            elif (datetime.datetime.now() - move_time).seconds % 15 == 0:
+                result = firebase.get('/ip/', name=None)
+                for k, v in result.items():
+                    if 'drive_count' in v:
+                        if int(v['drive_count']) < 4:
+                            print('ip {} drive_count {}'.format(k, v['drive_count']))
         time.sleep(0.1)
 
         # time.sleep(1)
