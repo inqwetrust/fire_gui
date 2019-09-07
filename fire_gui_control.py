@@ -54,7 +54,7 @@ def monitor():
                 # print(result)
                 wait_time = 0.1
         else:
-            wait_time += 0.05
+            wait_time += 0.025
             wait_time = max(min(wait_time, 10), 0.1)
         time.sleep(wait_time)
 
