@@ -17,6 +17,7 @@ from random import randint
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
 ip = s.getsockname()[0]
+ip_prefix = '_'.join(ip.split('.')[:3])
 s.close()
 
 filename = 'firebase_database_url.txt'
@@ -87,7 +88,8 @@ def broadcast():
                 data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Left', 'text_copy': "1"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
-                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                    if ip_prefix in k:
+                        firebase.put(url='/ip/{}'.format(k), name='click', data=data)
                 result_len = ' '
                 while True:
                     result = firebase.get('/ip/', name=None)
@@ -101,7 +103,7 @@ def broadcast():
                             break
                     if len(result_len) == 0:
                         break
-                time.sleep(0.1)
+                    time.sleep(0.1)
             else:
                 # print('Left Button Released')
                 pass
@@ -117,7 +119,8 @@ def broadcast():
                 data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Right', 'text_copy': "0"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
-                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                    if ip_prefix in k:
+                        firebase.put(url='/ip/{}'.format(k), name='click', data=data)
                 result_len = ' '
                 while True:
                     result = firebase.get('/ip/', name=None)
@@ -131,7 +134,7 @@ def broadcast():
                             break
                     if len(result_len) == 0:
                         break
-                time.sleep(0.1)
+                    time.sleep(0.1)
             else:
                 # print('Right Button Released')
                 pass
