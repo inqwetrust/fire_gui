@@ -120,7 +120,10 @@ def broadcast():
                 # print('Right Button Released')
                 pass
         elif get_caplock_state():
-            text_list = [chr(x) for x in range(66, 68, 1)] * 200
+            f = open('text_list.txt','r')
+            text_list = [t.replace("\n", "") for t in f.readlines()]
+            text_list = text_list * 200
+            f.close()
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
