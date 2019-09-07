@@ -92,7 +92,7 @@ def broadcast():
                 # print('Left Button Released')
                 pass
 
-        elif num_last_state != get_scrolllock_state() and num_last_state != None and get_caplock_state() == False:  # Button state changed
+        elif num_last_state != get_numlock_state() and num_last_state != None and get_caplock_state() == False:  # Button state changed
         # elif b != state_right and get_scrolllock_state():  # Button state changed
             move_time = datetime.datetime.now()
             state_right = b
