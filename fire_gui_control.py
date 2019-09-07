@@ -85,6 +85,9 @@ def broadcast():
                             result_len = ''
                             time.sleep(0.1)
                             print('ready after left click')
+                            scroll_last_state = get_scrolllock_state()
+                            num_last_state = get_numlock_state()
+
                             break
                     if len(result_len) == 0:
                         break
@@ -113,6 +116,9 @@ def broadcast():
                             result_len = ''
                             time.sleep(0.1)
                             print('ready after right click')
+                            scroll_last_state = get_scrolllock_state()
+                            num_last_state = get_numlock_state()
+
                             break
                     if len(result_len) == 0:
                         break
@@ -137,8 +143,6 @@ def broadcast():
                     move_time = datetime.datetime.now()
                     position_last = (x + randint(-1, 1), y)
         time.sleep(0.001)
-        scroll_last_state = get_scrolllock_state()
-        num_last_state = get_numlock_state()
 
         # time.sleep(1)
 
