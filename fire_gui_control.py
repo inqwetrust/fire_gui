@@ -61,6 +61,9 @@ def broadcast():
     state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button up = -127 or -128
     scroll_last_state = None
     num_last_state = None
+    scroll_last_state = get_scrolllock_state()
+    num_last_state = get_numlock_state()
+
     while True:
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
