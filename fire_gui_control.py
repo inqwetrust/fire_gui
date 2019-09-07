@@ -34,6 +34,7 @@ firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
 
 def monitor():
     result = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
+    wait_time = 0.2
     while True:
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
@@ -51,7 +52,11 @@ def monitor():
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
                 # print(result)
-        time.sleep(0.2)
+                wait_time = 0.1
+        else:
+            wait_time += 0.05
+            wait_time = max(min(wait_time, 10), 0.1)
+        time.sleep(wait_time)
 
 
 def broadcast():
