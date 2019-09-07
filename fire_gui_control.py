@@ -143,7 +143,7 @@ def broadcast():
                         ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
-        time.sleep(0.001)
+        time.sleep(0.1)
 
         # time.sleep(1)
 
