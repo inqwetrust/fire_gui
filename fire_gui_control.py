@@ -128,14 +128,14 @@ def broadcast():
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
-                    data = [{'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Move', 'text_copy': t} for t in text_list]
+                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
                     result = firebase.get('/ip/', name=None)
                     ix = 0
                     for k, v in result.items():
                         firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
                         ix += 1
                     move_time = datetime.datetime.now()
-                    position_last = (x, y)
+                    position_last = (x + randint(-1, 1), y + randint(-1, 1))
         time.sleep(0.001)
         scroll_last_state = get_scrolllock_state()
         num_last_state = get_numlock_state()
