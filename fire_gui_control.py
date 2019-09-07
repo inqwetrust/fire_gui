@@ -10,6 +10,7 @@ import pyautogui
 import win32api
 import time
 import win32gui
+import pyperclip
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -45,6 +46,7 @@ def monitor():
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
+                    pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
                 # print(result)
@@ -70,7 +72,7 @@ def broadcast():
             if a < 0 or True:
                 # print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y, 'state': 'Left'}
+                data = {'x': x, 'y': y, 'state': 'Left', 'text_copy': "1"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
@@ -98,7 +100,7 @@ def broadcast():
             if b < 0 or True:
                 # print('Right Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y, 'state': 'Right'}
+                data = {'x': x, 'y': y, 'state': 'Right', 'text_copy': "0"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
