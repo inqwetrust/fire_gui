@@ -73,7 +73,7 @@ def broadcast():
             if a < 0 or True:
                 # print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y, 'state': 'Left', 'text_copy': "1"}
+                data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Left', 'text_copy': "1"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
@@ -101,7 +101,7 @@ def broadcast():
             if b < 0 or True:
                 # print('Right Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x, 'y': y, 'state': 'Right', 'text_copy': "0"}
+                data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Right', 'text_copy': "0"}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     firebase.put(url='/ip/{}'.format(k), name='click', data=data)
