@@ -163,8 +163,6 @@ def broadcast():
                             print('ip {} drive_count {}'.format(k, v['drive_count']))
         time.sleep(0.1)
 
-        # time.sleep(1)
-
 
 def get_numlock_state():
     hllDll = ctypes.WinDLL("User32.dll")
