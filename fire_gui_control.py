@@ -118,13 +118,16 @@ def broadcast():
                 # print('Right Button Released')
                 pass
         elif get_caplock_state():
+            text_list = [chr(x) for x in range(66, 68, 1)] * 200
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
-                    data = {'x': x, 'y': y, 'state': 'Move'}
+                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
                     result = firebase.get('/ip/', name=None)
+                    ix = 0
                     for k, v in result.items():
-                        firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+                        firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
+                        ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
         time.sleep(0.001)
