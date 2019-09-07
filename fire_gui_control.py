@@ -90,7 +90,6 @@ def broadcast():
                             print('ready after left click')
                             scroll_last_state = get_scrolllock_state()
                             num_last_state = get_numlock_state()
-
                             break
                     if len(result_len) == 0:
                         break
@@ -121,7 +120,6 @@ def broadcast():
                             print('ready after right click')
                             scroll_last_state = get_scrolllock_state()
                             num_last_state = get_numlock_state()
-
                             break
                     if len(result_len) == 0:
                         break
