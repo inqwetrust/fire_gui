@@ -54,13 +54,13 @@ def monitor():
                 result = result_current
                 # print(result)
                 wait_time = 0.1
-        elif wait_time >= 44:
+        elif wait_time >= 54:
             firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(get_drive_count()))
             wait_time = 30
             pass
         else:
             wait_time *= 1.1
-            wait_time = max(min(wait_time, 45), 0.1)
+            wait_time = max(min(wait_time, 65), 0.1)
         time.sleep(wait_time)
 
 
