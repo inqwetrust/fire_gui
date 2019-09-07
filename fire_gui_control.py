@@ -53,9 +53,12 @@ def monitor():
                 result = result_current
                 # print(result)
                 wait_time = 0.1
+        elif wait_time >= 44:
+            wait_time = 30
+            pass
         else:
             wait_time += 0.015
-            wait_time = max(min(wait_time, 30), 0.1)
+            wait_time = max(min(wait_time, 45), 0.1)
         time.sleep(wait_time)
 
 
