@@ -55,6 +55,7 @@ def monitor():
                 # print(result)
                 wait_time = 0.1
         elif wait_time >= 44:
+            firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(get_drive_count()))
             wait_time = 30
             pass
         else:
@@ -175,6 +176,12 @@ def get_scrolllock_state():
     hllDll = ctypes.WinDLL("User32.dll")
     VK_CAPITAL = 0x91
     return hllDll.GetKeyState(VK_CAPITAL)
+
+
+def get_drive_count():
+    drives = win32api.GetLogicalDriveStrings()
+    drives = drives.split('\000')[:-1]
+    return len(drives)
 
 
 if __name__ == '__main__':
