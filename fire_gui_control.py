@@ -11,6 +11,7 @@ import win32api
 import time
 import win32gui
 import pyperclip
+from random import randint
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -127,7 +128,7 @@ def broadcast():
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
-                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
+                    data = [{'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Move', 'text_copy': t} for t in text_list]
                     result = firebase.get('/ip/', name=None)
                     ix = 0
                     for k, v in result.items():
