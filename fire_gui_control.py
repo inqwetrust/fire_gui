@@ -13,6 +13,7 @@ import win32gui
 import pyperclip
 from random import randint
 
+start_time = datetime.datetime.now()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -75,6 +76,10 @@ def broadcast():
     num_last_state = get_numlock_state()
 
     while True:
+        on_duration = datetime.datetime.now() - start_time
+        on_duration = on_duration.total_seconds()
+        if on_duration > 3600:
+            exit()
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
