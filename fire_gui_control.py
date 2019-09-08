@@ -180,7 +180,9 @@ def broadcast():
 
 
 def report_drive_count():
-    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(get_drive_count()))
+    drive_count = get_drive_count()
+    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(drive_count))
+    return drive_count
 
 
 def check_drive_count():
