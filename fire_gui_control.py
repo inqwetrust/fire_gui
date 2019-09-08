@@ -216,7 +216,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "control":
         while True:
             try:
-                check_drive_count()
+                print(check_drive_count())
                 broadcast()
             except:
                 print(traceback.format_exc())
