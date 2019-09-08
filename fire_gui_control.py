@@ -203,9 +203,11 @@ if __name__ == '__main__':
                 monitor()
             except:
                 print(traceback.format_exc())
+                time.sleep(10)
     elif sys.argv[1] == "control":
         while True:
             try:
                 broadcast()
             except:
                 print(traceback.format_exc())
+                time.sleep(5)
