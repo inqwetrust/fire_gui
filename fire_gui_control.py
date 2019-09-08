@@ -54,7 +54,7 @@ def monitor():
                 # print(result)
                 wait_time = 0.1
         elif wait_time >= 54:
-            report_drive_count()
+            print(ip, report_drive_count())
             wait_time = 30
             pass
         else:
@@ -89,7 +89,7 @@ def broadcast():
             state_left = a
             # print(a)
             if a < 0 or True:
-                # print('Left Button Pressed')
+                print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Left', 'text_copy': "1"}
                 result = firebase.get('/ip/', name=None)
@@ -121,7 +121,7 @@ def broadcast():
             state_right = b
             # print(b)
             if b < 0 or True:
-                # print('Right Button Pressed')
+                print('Right Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 data = {'x': x, 'y': y, 'state': 'Right', 'text_copy': "0"}
                 result = firebase.get('/ip/', name=None)
