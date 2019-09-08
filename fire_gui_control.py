@@ -34,9 +34,16 @@ firebase = firebase.FirebaseApplication(f.read(), None)
 
 
 def monitor():
+    global start_time
     result = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
     wait_time = 0.2
     while True:
+        on_duration = datetime.datetime.now() - start_time
+        on_duration = on_duration.total_seconds()
+        if on_duration > 3600:
+            print("restart again")
+            time.sleep(1800)
+            exit()
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
             print(result_current)
