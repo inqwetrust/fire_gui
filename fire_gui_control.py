@@ -100,13 +100,14 @@ def broadcast():
                 while True:
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
-                        if len(v['click']) == 0:
-                            result_len = ''
-                            time.sleep(0.1)
-                            print('ready after left click')
-                            scroll_last_state = get_scrolllock_state()
-                            num_last_state = get_numlock_state()
-                            break
+                        if ip_prefix in k:
+                            if len(v['click']) == 0:
+                                result_len = ''
+                                time.sleep(0.1)
+                                print('ready after left click')
+                                scroll_last_state = get_scrolllock_state()
+                                num_last_state = get_numlock_state()
+                                break
                     if len(result_len) == 0:
                         break
                     time.sleep(0.1)
@@ -131,13 +132,14 @@ def broadcast():
                 while True:
                     result = firebase.get('/ip/', name=None)
                     for k, v in result.items():
-                        if len(v['click']) == 0:
-                            result_len = ''
-                            time.sleep(0.1)
-                            print('ready after right click')
-                            scroll_last_state = get_scrolllock_state()
-                            num_last_state = get_numlock_state()
-                            break
+                        if ip_prefix in k:
+                            if len(v['click']) == 0:
+                                result_len = ''
+                                time.sleep(0.1)
+                                print('ready after right click')
+                                scroll_last_state = get_scrolllock_state()
+                                num_last_state = get_numlock_state()
+                                break
                     if len(result_len) == 0:
                         break
                     time.sleep(0.1)
