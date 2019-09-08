@@ -226,7 +226,7 @@ if __name__ == '__main__':
         while True:
             try:
                 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                report_drive_count()
+                print(ip , report_drive_count())
                 monitor()
             except:
                 print(traceback.format_exc())
