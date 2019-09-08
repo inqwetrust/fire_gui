@@ -158,8 +158,9 @@ def broadcast():
                     result = firebase.get('/ip/', name=None)
                     ix = 0
                     for k, v in result.items():
-                        firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
-                        ix += 1
+                        if ip_prefix in k:
+                            firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
+                            ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
         time.sleep(0.1)
