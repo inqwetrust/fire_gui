@@ -91,7 +91,7 @@ def broadcast():
             if a < 0 or True:
                 print('Left Button Pressed')
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Left', 'text_copy': "{}".format(randint(-1234567, ))}
+                data = {'x': x + randint(-1, 1), 'y': y + randint(-1, 1), 'state': 'Left', 'text_copy': "{}".format(randint(-1234567, -1))}
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     if ip_prefix in k:
