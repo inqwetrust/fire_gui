@@ -166,7 +166,7 @@ def broadcast():
                     if ip_prefix in k:
                         if 'drive_count' in v:
                             if int(v['drive_count']) < 4:
-                                print('ip {} drive_count {}'.format(k, v['drive_count']))
+                                print('ERROR: ip {} drive_count {} RE-MAP DRIVE'.format(k, v['drive_count']))
         time.sleep(0.1)
 
 
