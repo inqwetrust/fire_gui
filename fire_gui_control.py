@@ -109,9 +109,9 @@ def broadcast():
                                 print('ready after left click')
                                 break
                     if len(result_len) == 0:
+                        pyautogui.press("scrolllock")
                         scroll_last_state = get_scrolllock_state()
                         num_last_state = get_numlock_state()
-                        pyautogui.press("scrolllock")
                         break
                     time.sleep(0.1)
             else:
