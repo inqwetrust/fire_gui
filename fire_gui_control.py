@@ -76,10 +76,10 @@ def broadcast():
     while True:
         on_duration = datetime.datetime.now() - start_time
         on_duration = on_duration.total_seconds()
-        if on_duration > 3600:
-            print("Restart again")
-            time.sleep(3600000)
-            exit()
+        if on_duration > 3600 and get_caplock_state():
+            pyautogui.press('capslock')
+            start_time = datetime.datetime.now()
+            pass
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
 
@@ -105,10 +105,11 @@ def broadcast():
                                 result_len = ''
                                 time.sleep(0.1)
                                 print('ready after left click')
-                                scroll_last_state = get_scrolllock_state()
-                                num_last_state = get_numlock_state()
                                 break
                     if len(result_len) == 0:
+                        scroll_last_state = get_scrolllock_state()
+                        num_last_state = get_numlock_state()
+                        pyautogui.press("scrolllock")
                         break
                     time.sleep(0.1)
             else:
@@ -137,10 +138,11 @@ def broadcast():
                                 result_len = ''
                                 time.sleep(0.1)
                                 print('ready after right click')
-                                scroll_last_state = get_scrolllock_state()
-                                num_last_state = get_numlock_state()
                                 break
                     if len(result_len) == 0:
+                        pyautogui.press("numlock")
+                        scroll_last_state = get_scrolllock_state()
+                        num_last_state = get_numlock_state()
                         break
                     time.sleep(0.1)
             else:
