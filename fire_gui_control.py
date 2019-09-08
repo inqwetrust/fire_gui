@@ -40,7 +40,7 @@ def monitor():
     while True:
         on_duration = datetime.datetime.now() - start_time
         on_duration = on_duration.total_seconds()
-        if on_duration > 3600:
+        if on_duration > 9600 and wait_time > 60:
             print("restart again")
             time.sleep(1800)
             exit()
