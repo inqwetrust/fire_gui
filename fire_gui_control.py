@@ -79,6 +79,8 @@ def broadcast():
         on_duration = datetime.datetime.now() - start_time
         on_duration = on_duration.total_seconds()
         if on_duration > 3600:
+            print("Restart again")
+            time.sleep(3600000)
             exit()
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
