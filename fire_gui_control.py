@@ -162,7 +162,7 @@ def broadcast():
                         ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
-            elif (datetime.datetime.now() - move_time).seconds % 15 == 0:
+            elif (datetime.datetime.now() - move_time).total_seconds() % 15 == 0:
                 result = firebase.get('/ip/', name=None)
                 for k, v in result.items():
                     if ip_prefix in k:
