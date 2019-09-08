@@ -58,7 +58,7 @@ def monitor():
             wait_time = 30
             pass
         else:
-            wait_time *= 1.1
+            wait_time *= 1.3
             wait_time = max(min(wait_time, 65), 0.1)
         time.sleep(wait_time)
 
