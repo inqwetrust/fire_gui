@@ -54,7 +54,7 @@ def monitor():
                 # print(result)
                 wait_time = 0.1
         elif wait_time >= 54:
-            firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(get_drive_count()))
+            report_drive_count()
             wait_time = 30
             pass
         else:
@@ -160,14 +160,23 @@ def broadcast():
                         ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
-            elif (datetime.datetime.now() - move_time).total_seconds() % 5 == 0:
-                result = firebase.get('/ip/', name=None)
-                for k, v in result.items():
-                    if ip_prefix in k:
-                        if 'drive_count' in v:
-                            if int(v['drive_count']) < 4:
-                                print('ERROR: ip {} drive_count {} RE-MAP DRIVE'.format(k, v['drive_count']))
         time.sleep(0.1)
+
+
+def report_drive_count():
+    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='drive_count', data='{}'.format(get_drive_count()))
+
+
+def check_drive_count():
+    result = firebase.get('/ip/', name=None)
+    msg_list = []
+    for k, v in result.items():
+        if ip_prefix in k:
+            if 'drive_count' in v:
+                if int(v['drive_count']) < 4:
+                    msg_list.append((k, v['drive_count']))
+                    pass
+    return 'ERROR: ip, drive_count {} RE-MAP DRIVE'.format(msg_list)
 
 
 def get_numlock_state():
@@ -199,6 +208,7 @@ if __name__ == '__main__':
         while True:
             try:
                 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                report_drive_count()
                 monitor()
             except:
                 print(traceback.format_exc())
@@ -206,6 +216,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "control":
         while True:
             try:
+                check_drive_count()
                 broadcast()
             except:
                 print(traceback.format_exc())
