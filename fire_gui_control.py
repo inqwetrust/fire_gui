@@ -31,9 +31,6 @@ firebase = firebase.FirebaseApplication(f.read(), None)
 # firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data=data)
 # result = firebase.get('/ip/{}'.format(ip).replace('.', '_'),name='click')
 
-firebase.put(url='/ip/{}'.format(ip).replace('.', '_'),name='click', data='')
-
-
 def monitor():
     result = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
     wait_time = 0.2
@@ -200,6 +197,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         while True:
             try:
+                firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 monitor()
             except:
                 print(traceback.format_exc())
