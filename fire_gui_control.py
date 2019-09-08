@@ -150,6 +150,8 @@ def broadcast():
             text_list = text_list * 200
             f.close()
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
+                scroll_last_state = get_scrolllock_state()
+                num_last_state = get_numlock_state()
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
                     data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
