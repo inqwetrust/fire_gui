@@ -144,7 +144,7 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif get_caplock_state():
+        elif get_caplock_state() and get_numlock_state() == False and get_scrolllock_state() == False:
             f = open('text_list.txt','r')
             text_list = [t.replace("\n", "") for t in f.readlines()]
             text_list = text_list * 200
