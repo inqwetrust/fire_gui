@@ -46,7 +46,7 @@ def monitor():
             exit()
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
-            print(result_current)
+            # print(result_current)
             if "state" in result_current:
                 if result_current['state'] == "Left":
                     pyautogui.click((int(result_current['x']), int(result_current['y'])))
@@ -59,7 +59,7 @@ def monitor():
                     pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
-                # print(result)
+                print(result)
                 wait_time = 0.1
         elif wait_time >= 54:
             print(ip, report_drive_count())
