@@ -13,6 +13,7 @@ import win32gui
 import pyperclip
 from random import randint
 
+global start_time
 start_time = datetime.datetime.now()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -64,6 +65,7 @@ def monitor():
 
 
 def broadcast():
+    global start_time
     move_time = datetime.datetime.now()
     position_last = (0, 0)
     state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128
@@ -78,7 +80,7 @@ def broadcast():
         on_duration = on_duration.total_seconds()
         if on_duration > 3600 and get_caplock_state():
             pyautogui.press('capslock')
-            start_time = datetime.datetime.now()
+            start_time += datetime.timedelta(hours=1)
             pass
         a = win32api.GetKeyState(0x01)
         b = win32api.GetKeyState(0x02)
