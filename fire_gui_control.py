@@ -160,25 +160,6 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif get_caplock_state() and get_numlock_state() == False and get_scrolllock_state() == False:
-            f = open('text_list.txt','r')
-            text_list = [t.replace("\n", "") for t in f.readlines()]
-            text_list = text_list * 200
-            f.close()
-            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
-                scroll_last_state = get_scrolllock_state()
-                num_last_state = get_numlock_state()
-                flags, hcursor, (x, y) = win32gui.GetCursorInfo()
-                if (x, y) != position_last:
-                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
-                    result = firebase.get('/ip/', name=None)
-                    ix = 0
-                    for k, v in result.items():
-                        if ip_prefix in k:
-                            firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
-                            ix += 1
-                    move_time = datetime.datetime.now()
-                    position_last = (x, y)
         elif get_caplock_state() and get_numlock_state() and get_scrolllock_state():
             data = {'x': randint(100, 200), 'y': randint(100, 200), 'state': 'Paste', 'text_copy': "{}".format(randint(1, 12345))}
             result = firebase.get('/ip/', name=None)
@@ -201,6 +182,25 @@ def broadcast():
                     scroll_last_state = get_scrolllock_state()
                     num_last_state = get_numlock_state()
                     break
+        elif get_caplock_state() and get_numlock_state() == False and get_scrolllock_state() == False:
+            f = open('text_list.txt','r')
+            text_list = [t.replace("\n", "") for t in f.readlines()]
+            text_list = text_list * 200
+            f.close()
+            if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
+                scroll_last_state = get_scrolllock_state()
+                num_last_state = get_numlock_state()
+                flags, hcursor, (x, y) = win32gui.GetCursorInfo()
+                if (x, y) != position_last:
+                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
+                    result = firebase.get('/ip/', name=None)
+                    ix = 0
+                    for k, v in result.items():
+                        if ip_prefix in k:
+                            firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
+                            ix += 1
+                    move_time = datetime.datetime.now()
+                    position_last = (x, y)
             pass
         time.sleep(0.1)
 
