@@ -58,6 +58,9 @@ def monitor():
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
                     pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                elif result_current['state'] == "Paste":
+                    pyperclip.paste()
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
                 print(result)
                 wait_time = 0.1
@@ -176,6 +179,29 @@ def broadcast():
                             ix += 1
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
+        elif get_caplock_state() and get_numlock_state() and get_scrolllock_state():
+            data = {'x': randint(100, 200), 'y': randint(100, 200), 'state': 'Paste', 'text_copy': "{}".format(randint(1, 12345))}
+            result = firebase.get('/ip/', name=None)
+            for k, v in result.items():
+                if ip_prefix in k:
+                    firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+            result_len = ' '
+            while True:
+                result = firebase.get('/ip/', name=None)
+                for k, v in result.items():
+                    if ip_prefix in k:
+                        if len(v['click']) == 0:
+                            result_len = ''
+                            time.sleep(0.1)
+                            print('ready after Paste')
+                            break
+                if len(result_len) == 0:
+                    pyautogui.press("numlock")
+                    pyautogui.press("scrolllock")
+                    scroll_last_state = get_scrolllock_state()
+                    num_last_state = get_numlock_state()
+                    break
+            pass
         time.sleep(0.1)
 
 
