@@ -58,7 +58,7 @@ def monitor():
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Paste":
-                    pyperclip.hotkey('ctrl', 'v')
+                    pyautogui.hotkey('ctrl', 'v')
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Copy":
                     pyperclip.copy(result_current['text_copy'])
