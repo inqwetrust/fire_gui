@@ -56,10 +56,12 @@ def monitor():
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Move":
                     pyautogui.moveTo((int(result_current['x']), int(result_current['y'])))
-                    pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Paste":
                     pyperclip.paste()
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                elif result_current['state'] == "Copy":
+                    pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
                 print(result)
@@ -160,7 +162,7 @@ def broadcast():
             else:
                 # print('Right Button Released')
                 pass
-        elif get_caplock_state() and get_numlock_state() and get_scrolllock_state():
+        elif get_caplock_state() and get_numlock_state() and get_scrolllock_state() == False:
             data = {'x': randint(100, 200), 'y': randint(100, 200), 'state': 'Paste', 'text_copy': "{}".format(randint(1, 12345))}
             result = firebase.get('/ip/', name=None)
             for k, v in result.items():
@@ -178,27 +180,49 @@ def broadcast():
                             break
                 if len(result_len) == 0:
                     pyautogui.press("numlock")
+                    # pyautogui.press("scrolllock")
+                    scroll_last_state = get_scrolllock_state()
+                    num_last_state = get_numlock_state()
+                    break
+        elif get_caplock_state() and get_numlock_state() == False and get_scrolllock_state():
+            f = open('text_list.txt', 'r')
+            text_list = [t.replace("\n", "") for t in f.readlines()]
+            text_list = text_list * 200
+            f.close()
+            data = [{'x': randint(100, 200), 'y': randint(100, 200), 'state': 'Copy', 'text_copy': t} for t in text_list]
+            result = firebase.get('/ip/', name=None)
+            ix = 0
+            for k, v in result.items():
+                if ip_prefix in k:
+                    firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
+                    ix += 1
+            result_len = ' '
+            while True:
+                result = firebase.get('/ip/', name=None)
+                for k, v in result.items():
+                    if ip_prefix in k:
+                        if len(v['click']) == 0:
+                            result_len = ''
+                            time.sleep(0.1)
+                            print('ready after Copy')
+                            break
+                if len(result_len) == 0:
+                    # pyautogui.press("numlock")
                     pyautogui.press("scrolllock")
                     scroll_last_state = get_scrolllock_state()
                     num_last_state = get_numlock_state()
                     break
         elif get_caplock_state() and get_numlock_state() == False and get_scrolllock_state() == False:
-            f = open('text_list.txt','r')
-            text_list = [t.replace("\n", "") for t in f.readlines()]
-            text_list = text_list * 200
-            f.close()
             if move_time < (datetime.datetime.now() - datetime.timedelta(seconds=3)):
                 scroll_last_state = get_scrolllock_state()
                 num_last_state = get_numlock_state()
                 flags, hcursor, (x, y) = win32gui.GetCursorInfo()
                 if (x, y) != position_last:
-                    data = [{'x': x, 'y': y, 'state': 'Move', 'text_copy': t} for t in text_list]
+                    data = {'x': x, 'y': y, 'state': 'Move', 'text_copy': "{}".format(randint(1, 1234567))}
                     result = firebase.get('/ip/', name=None)
-                    ix = 0
                     for k, v in result.items():
                         if ip_prefix in k:
-                            firebase.put(url='/ip/{}'.format(k), name='click', data=data[ix])
-                            ix += 1
+                            firebase.put(url='/ip/{}'.format(k), name='click', data=data)
                     move_time = datetime.datetime.now()
                     position_last = (x, y)
             pass
