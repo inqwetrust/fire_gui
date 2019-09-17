@@ -67,6 +67,7 @@ def monitor():
                     print("Exiting")
                     time.sleep(10)
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                    exit()
                     break
                 result = result_current
                 print(result)
@@ -293,6 +294,7 @@ if __name__ == '__main__':
                 monitor()
                 print("exiting monitor")
                 time.sleep(5)
+                exit()
                 break
             except:
                 print(traceback.format_exc())
@@ -310,6 +312,8 @@ if __name__ == '__main__':
             try:
                 print("sending exit signal to all same subnet")
                 exit_all_same_subnet()
+                time.sleep(5)
+                exit()
                 break
             except:
                 print(traceback.format_exc())
