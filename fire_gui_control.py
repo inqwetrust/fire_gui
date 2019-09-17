@@ -291,6 +291,7 @@ if __name__ == '__main__':
                 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 print(ip, report_drive_count())
                 monitor()
+                break
             except:
                 print(traceback.format_exc())
                 time.sleep(10)
@@ -305,6 +306,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "exit":
         while True:
             try:
+                print("sending exit signal to all same subnet")
                 exit_all_same_subnet()
                 break
             except:
