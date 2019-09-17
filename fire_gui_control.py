@@ -64,10 +64,9 @@ def monitor():
                     pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 elif result_current['state'] == "Exit":
-                    print("Exiting")
+                    print("Program Stopped")
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                    time.sleep(10)
-                    break
+                    time.sleep(10000000000)
                 result = result_current
                 print(result)
                 wait_time = 0.1
@@ -292,8 +291,7 @@ if __name__ == '__main__':
                 print(ip, report_drive_count())
                 monitor()
                 print("exiting monitor")
-                time.sleep(5)
-                break
+                time.sleep(100000000)
             except:
                 print(traceback.format_exc())
                 time.sleep(10)
@@ -310,8 +308,7 @@ if __name__ == '__main__':
             try:
                 print("sending exit signal to all same subnet")
                 exit_all_same_subnet()
-                time.sleep(5)
-                break
+                time.sleep(10000000)
             except:
                 print(traceback.format_exc())
                 time.sleep(5)
