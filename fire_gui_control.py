@@ -66,8 +66,8 @@ def monitor():
                 elif result_current['state'] == "Exit":
                     print("Exiting")
                     time.sleep(10)
-                    exit()
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                    break
                 result = result_current
                 print(result)
                 wait_time = 0.1
