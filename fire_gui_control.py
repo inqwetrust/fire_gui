@@ -291,6 +291,8 @@ if __name__ == '__main__':
                 firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 print(ip, report_drive_count())
                 monitor()
+                print("exiting monitor")
+                time.sleep(5)
                 break
             except:
                 print(traceback.format_exc())
