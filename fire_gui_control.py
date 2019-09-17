@@ -63,6 +63,10 @@ def monitor():
                 elif result_current['state'] == "Copy":
                     pyperclip.copy(result_current['text_copy'])
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
+                elif result_current['state'] == "Exit":
+                    print("Exiting")
+                    time.sleep(10)
+                    firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
                 result = result_current
                 print(result)
                 wait_time = 0.1
@@ -271,6 +275,14 @@ def get_drive_count():
     return len(drives)
 
 
+def exit_all_same_subnet():
+    data = {'x': 100, 'y': 100, 'state': 'Exit', 'text_copy': "{}".format(randint(1, 1234567))}
+    result = firebase.get('/ip/', name=None)
+    for k, v in result.items():
+        if ip_prefix in k:
+            firebase.put(url='/ip/{}'.format(k), name='click', data=data)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         while True:
@@ -286,6 +298,14 @@ if __name__ == '__main__':
             try:
                 print(check_drive_count())
                 broadcast()
+            except:
+                print(traceback.format_exc())
+                time.sleep(5)
+    elif sys.argv[1] == "exit":
+        while True:
+            try:
+                exit_all_same_subnet()
+                exit()
             except:
                 print(traceback.format_exc())
                 time.sleep(5)
