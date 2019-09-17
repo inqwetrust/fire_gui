@@ -43,7 +43,7 @@ def monitor():
         if on_duration > 9600 and wait_time > 60:
             print("restart again")
             time.sleep(1800)
-            exit()
+            sys.exit()
         result_current = firebase.get('/ip/{}'.format(ip).replace('.', '_'), name='click')
         if result != result_current:
             # print(result_current)
@@ -67,7 +67,7 @@ def monitor():
                     print("Exiting")
                     time.sleep(10)
                     firebase.put(url='/ip/{}'.format(ip).replace('.', '_'), name='click', data='')
-                    exit()
+                    sys.exit()
                     break
                 result = result_current
                 print(result)
@@ -294,7 +294,7 @@ if __name__ == '__main__':
                 monitor()
                 print("exiting monitor")
                 time.sleep(5)
-                exit()
+                sys.exit()
                 break
             except:
                 print(traceback.format_exc())
@@ -313,7 +313,6 @@ if __name__ == '__main__':
                 print("sending exit signal to all same subnet")
                 exit_all_same_subnet()
                 time.sleep(5)
-                exit()
                 break
             except:
                 print(traceback.format_exc())
